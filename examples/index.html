@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script type="importmap">
+    {
+      "imports": {
+        "@hotwired/stimulus": "/node_modules/@hotwired/stimulus/dist/stimulus.js",
+        "@kanety/stimulus-static-actions": "/node_modules/@kanety/stimulus-static-actions/dist/index.module.js",
+        "@kanety/stimulus-dropzone": "/dist/index.module.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import { Application, Controller } from '@hotwired/stimulus';
+    import '@kanety/stimulus-static-actions';
+    import DropzoneController from '@kanety/stimulus-dropzone';
+    const application = Application.start();
+    application.register('dropzone', DropzoneController);
+  </script>
+  <link rel="stylesheet" href="/dist/index.css"></link>
+</head>
+<body>
+  <h1>Basic use</h1>
+  <div data-controller="dropzone">
+    <input type="file">
+    <p>Drop here</p>
+  </div>
+</body>
+</html>

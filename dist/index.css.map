@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.scss"],"names":[],"mappings":"AAAA,uBACE,wBACF,CAEA,qBACE,uBACF","file":"index.css","sourcesContent":[".st-dropzone--dragover {\n  background-color: #f0f8ff;\n}\n\n.st-dropzone--dragin {\n  outline: 3px dotted #ddd;\n}"]}
