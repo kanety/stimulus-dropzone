@@ -58,7 +58,7 @@ Grow drop zone size while dragging:
 
 ### Callbacks
 
-Run callbacks when file is dropped:
+Run callbacks when files are dropped:
 
 ```javascript
 let element = document.querySelector('[data-controller="dropzone"]');
