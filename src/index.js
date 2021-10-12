@@ -42,9 +42,11 @@ export default class extends Controller {
     this.counter = 0;
     this.element.classList.remove('st-dropzone--dragover');
 
-    if (this.input) {
-      this.input.files = e.dataTransfer.files;
-      this.input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    let input = this.input;
+    if (input) {
+      input.files = e.dataTransfer.files;
+      input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
     }
     this.dispatch('dropped', { detail: { files: e.dataTransfer.files } });
 
