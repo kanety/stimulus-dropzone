@@ -1,7 +1,7 @@
 {
   "name": "@kanety/stimulus-dropzone",
   "description": "A stimulus controller for simple drop zone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "source": "src/index.js",
   "main": "./dist/index.js",
   "umd:main": "./dist/index.umd.js",
