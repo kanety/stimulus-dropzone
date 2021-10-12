@@ -1,6 +1,10 @@
 .st-dropzone--dragover {
-  background-color: #f0f8ff;
+  background-color: #dafaff;
 }
 .st-dropzone--dragin {
   outline: 3px dotted #ddd;
+}
+.st-dropzone--disable-drop {
+  background-color: #fbb;
+  background-image: repeating-linear-gradient(-45deg, #fff, #fff 5px, transparent 0, transparent 10px);
 }

@@ -8,7 +8,7 @@ describe('index', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div data-controller="dropzone">
-        <input type="file">
+        <input type="file" multiple>
         <p>Drop here</p>
       </div>
     `;
@@ -17,7 +17,7 @@ describe('index', () => {
   let files = [];
   beforeEach(() => {
     Object.defineProperty($('input'), 'files', {
-      set: function(newFiles) { files = newFiles; }
+      set: (newFiles) => { files = newFiles; }
     });
     let event = new CustomEvent('drop', { bubbles: true });
     event.dataTransfer = {

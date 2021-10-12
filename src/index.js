@@ -26,31 +26,38 @@ export default class extends Controller {
 
   enter(e) {
     this.counter++;
-    this.element.classList.add('st-dropzone--dragover');
+    this.toggleClass(e.dataTransfer, true);
     e.preventDefault();
   }
 
   leave(e) {
     this.counter--;
-    if (this.counter == 0) {
-      this.element.classList.remove('st-dropzone--dragover');
-    }
+    if (this.counter == 0) this.toggleClass(e.dataTransfer, false);
     e.preventDefault();
   }
 
   drop(e) {
     this.counter = 0;
-    this.element.classList.remove('st-dropzone--dragover');
+    this.toggleClass(e.dataTransfer, false);
 
-    let input = this.input;
-    if (input) {
-      input.files = e.dataTransfer.files;
-      input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-      input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    if (this.droppable(e.dataTransfer)) {
+      let input = this.input;
+      if (input) {
+        input.files = e.dataTransfer.files;
+        input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+      }
+      this.dispatch('dropped', { detail: { files: e.dataTransfer.files } });
     }
-    this.dispatch('dropped', { detail: { files: e.dataTransfer.files } });
 
     e.preventDefault();
+  }
+
+  toggleClass(dataTransfer, dragover) {
+    this.element.classList.toggle('st-dropzone--dragover', dragover);
+    if (!this.droppable(dataTransfer)) {
+      this.element.classList.toggle('st-dropzone--disable-drop', dragover);
+    }
   }
 
   overDoc(e) {
@@ -92,5 +99,10 @@ export default class extends Controller {
     if (this.growHeightValue) {
       this.element.style.minHeight = '';
     }
+  }
+
+  droppable(dataTransfer) {
+    let input = this.input;
+    return !input || input.hasAttribute('multiple') || dataTransfer.items.length == 1;
   }
 }
