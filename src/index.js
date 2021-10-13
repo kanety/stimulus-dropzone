@@ -54,9 +54,16 @@ export default class extends Controller {
   }
 
   toggleClass(dataTransfer, dragover) {
-    this.element.classList.toggle('st-dropzone--dragover', dragover);
-    if (!this.droppable(dataTransfer)) {
-      this.element.classList.toggle('st-dropzone--disable-drop', dragover);
+    if (dragover) {
+      this.element.classList.add('st-dropzone--dragover');
+      if (!this.droppable(dataTransfer)) {
+        this.element.classList.add('st-dropzone--disable-drop');
+      }
+    } else {
+      this.element.classList.remove('st-dropzone--dragover');
+      if (!this.droppable(dataTransfer)) {
+        this.element.classList.remove('st-dropzone--disable-drop');
+      }
     }
   }
 
