@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.3
+
+* Remove use of toggle for classList.
+
 ## 1.0.2
 
 * Check acceptance of multiple files for input tag.
