@@ -1,9 +1,3 @@
-import { Application } from '@hotwired/stimulus';
-import DropzoneController from 'index';
-
-const application = Application.start();
-application.register('dropzone', DropzoneController);
-
 describe('calbacks', () => {
   beforeEach(() => {
     document.body.innerHTML = `

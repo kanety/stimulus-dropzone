@@ -1,10 +1,4 @@
-import { Application } from '@hotwired/stimulus';
-import DropzoneController from 'index';
-
-const application = Application.start();
-application.register('dropzone', DropzoneController);
-
-describe('index', () => {
+describe('single', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div data-controller="dropzone">
