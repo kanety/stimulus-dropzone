@@ -10,15 +10,16 @@ describe('drag', () => {
   });
 
   it('drag', () => {
-    document.dispatchEvent(new CustomEvent('dragenter', { bubbles: true }));
-    document.dispatchEvent(new CustomEvent('dragover', { bubbles: true }));
-    $('div').dispatchEvent(new CustomEvent('dragenter', { bubbles: true }));
-    $('div').dispatchEvent(new CustomEvent('dragover', { bubbles: true }));
+    let files = [{ name: 'file1.txt', type: 'text/plain', size: 1 }];
+    document.dispatchEvent(createTransferEvent('dragenter', files));
+    document.dispatchEvent(createTransferEvent('dragover', files));
+    $('div').dispatchEvent(createTransferEvent('dragenter', files));
+    $('div').dispatchEvent(createTransferEvent('dragover', files));
     expect($('div').matches('.st-dropzone--dragin')).toEqual(true);
     expect($('div').matches('.st-dropzone--dragover')).toEqual(true);
 
-    $('div').dispatchEvent(new CustomEvent('dragleave', { bubbles: true }));
-    document.dispatchEvent(new CustomEvent('dragleave', { bubbles: true }));
+    $('div').dispatchEvent(createTransferEvent('dragleave', files));
+    document.dispatchEvent(createTransferEvent('dragleave', files));
     jest.runAllTimers();
     expect($('div').matches('.st-dropzone--dragin')).toEqual(false);
     expect($('div').matches('.st-dropzone--dragover')).toEqual(false);

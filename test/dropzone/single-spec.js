@@ -13,18 +13,11 @@ describe('single', () => {
     Object.defineProperty($('input'), 'files', {
       set: (newFiles) => { files = newFiles; }
     });
-    let event = new CustomEvent('drop', { bubbles: true });
-    event.dataTransfer = {
-      files: [
-        { name: 'file1.txt', type: 'text/plain', size: 1 },
-        { name: 'file2.txt', type: 'text/plain', size: 1 }
-      ],
-      items: [
-        { kind: 'file', type: 'text/plain' },
-        { kind: 'file', type: 'text/plain' }
-      ]
-    };
-    $('div').dispatchEvent(event);
+
+    $('div').dispatchEvent(createTransferEvent('drop', [
+      { name: 'file1.txt', type: 'text/plain', size: 1 },
+      { name: 'file2.txt', type: 'text/plain', size: 1 }
+    ]));
   });
 
   it('sets files', () => {

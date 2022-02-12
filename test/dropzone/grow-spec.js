@@ -12,12 +12,13 @@ describe('grow', () => {
   });
 
   it('grows zone', () => {
-    document.dispatchEvent(new CustomEvent('dragenter', { bubbles: true }));
-    document.dispatchEvent(new CustomEvent('dragover', { bubbles: true }));
+    let files = [{ name: 'file1.txt', type: 'text/plain', size: 1 }];
+    document.dispatchEvent(createTransferEvent('dragenter', files));
+    document.dispatchEvent(createTransferEvent('dragover', files));
     expect($('div').style.minWidth).toEqual('500px');
     expect($('div').style.minHeight).toEqual('1000px');
 
-    document.dispatchEvent(new CustomEvent('dragleave', { bubbles: true }));
+    document.dispatchEvent(createTransferEvent('dragleave', files));
     jest.runAllTimers();
     expect($('div').style.minWidth).toEqual('');
     expect($('div').style.minHeight).toEqual('');

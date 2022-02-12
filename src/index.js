@@ -25,67 +25,70 @@ export default class extends Controller {
   }
 
   enter(e) {
+    e.preventDefault();
+    if (!this.isDroppable(e.dataTransfer)) return;
+
     this.counter++;
     this.toggleClass(e.dataTransfer, true);
-    e.preventDefault();
   }
 
   leave(e) {
+    e.preventDefault();
+    if (!this.isDroppable(e.dataTransfer)) return;
+
     this.counter--;
     if (this.counter == 0) this.toggleClass(e.dataTransfer, false);
-    e.preventDefault();
   }
 
   drop(e) {
+    e.preventDefault();
+    if (!this.isDroppable(e.dataTransfer)) return;
+
     this.counter = 0;
     this.toggleClass(e.dataTransfer, false);
 
-    if (this.droppable(e.dataTransfer)) {
-      let input = this.input;
-      if (input) {
-        input.files = e.dataTransfer.files;
-        input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-        input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-      }
-      this.dispatch('dropped', { detail: { files: e.dataTransfer.files } });
+    let input = this.input;
+    if (input) {
+      input.files = e.dataTransfer.files;
+      input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
     }
-
-    e.preventDefault();
+    this.dispatch('dropped', { detail: { files: e.dataTransfer.files } });
   }
 
   toggleClass(dataTransfer, dragover) {
-    if (dragover) {
+    if (dragover && this.isDroppable(dataTransfer)) {
       this.element.classList.add('st-dropzone--dragover');
-      if (!this.droppable(dataTransfer)) {
-        this.element.classList.add('st-dropzone--disable-drop');
-      }
     } else {
       this.element.classList.remove('st-dropzone--dragover');
-      if (!this.droppable(dataTransfer)) {
-        this.element.classList.remove('st-dropzone--disable-drop');
-      }
     }
   }
 
   overDoc(e) {
+    e.preventDefault();
+    if (!this.isDroppable(e.dataTransfer)) return;
+
     this.dragging = true;
     this.dragin()
-    e.preventDefault();
   }
 
   leaveDoc(e) {
+    e.preventDefault();
+    if (!this.isDroppable(e.dataTransfer)) return;
+
     this.dragging = false;
     if (this.timeout) clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (!this.dragging) this.dragout();
     } , 200);
-    e.preventDefault();
   }
 
   dropDoc(e) {
+    e.preventDefault();
+    if (!this.isDroppable(e.dataTransfer)) return;
+
     this.dragging = false;
     this.dragout();
-    e.preventDefault();
   }
 
   dragin() {
@@ -108,7 +111,11 @@ export default class extends Controller {
     }
   }
 
-  droppable(dataTransfer) {
+  isDroppable(dataTransfer) {
+    return dataTransfer.items.length && dataTransfer.items[0].kind == 'file' && this.isAllowedByInput(dataTransfer);
+  }
+
+  isAllowedByInput(dataTransfer) {
     let input = this.input;
     return !input || input.hasAttribute('multiple') || dataTransfer.items.length == 1;
   }
