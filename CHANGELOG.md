@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.0.4
+
+* Check type of dataTransfer.
+* Remove css for disable.
+
 ## 1.0.3
 
 * Remove use of toggle for classList.
