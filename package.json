@@ -5,7 +5,7 @@
   "source": "src/index.js",
   "main": "./dist/index.js",
   "umd:main": "./dist/index.umd.js",
-  "module": "./dist/index.module.js",
+  "module": "./dist/index.module.mjs",
   "style": "./dist/index.css",
   "author": "Yoshikazu Kaneta <kaneta@sitebridge.co.jp>",
   "license": "MIT",
