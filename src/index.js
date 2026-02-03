@@ -112,11 +112,11 @@ export default class extends Controller {
   }
 
   isDroppable(dataTransfer) {
-    return dataTransfer.items.length && dataTransfer.items[0].kind == 'file' && this.isAllowedByInput(dataTransfer);
+    return dataTransfer.items.length && dataTransfer.items[0].kind == 'file' && this.isInputtable(dataTransfer);
   }
 
-  isAllowedByInput(dataTransfer) {
+  isInputtable(dataTransfer) {
     let input = this.input;
-    return !input || input.hasAttribute('multiple') || dataTransfer.items.length == 1;
+    return !input || (!input.disabled && (input.hasAttribute('multiple') || dataTransfer.items.length == 1));
   }
 }
