@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.2.0
+
+* Support directory drops.
+* Prevent file drops when input is disabled.
+
 ## 1.1.0
 
 * Move dependencies to peerDependencies.
