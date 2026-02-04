@@ -56,12 +56,24 @@ Grow drop zone size while dragging:
 </div>
 ```
 
+#### allow-dirs
+
+Allow dropping directories:
+
+```html
+<div data-controller="dropzone"
+     data-allow-dirs-value="true">
+  <input type="file" multiple>
+  <p>Drop here</p>
+</div>
+```
+
 ### Callbacks
 
 Run callbacks when files are dropped:
 
 ```javascript
-let element = document.querySelector('[data-controller="dropzone"]');
+const element = document.querySelector('[data-controller="dropzone"]');
 element.addEventListener('dropzone:dropped', e => {
   // e.detail.files are dropped files
   console.log("dropped " + e.detail.files);

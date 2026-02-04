@@ -15,8 +15,8 @@ describe('single', () => {
     });
 
     $('div').dispatchEvent(createTransferEvent('drop', [
-      { name: 'file1.txt', type: 'text/plain', size: 1 },
-      { name: 'file2.txt', type: 'text/plain', size: 1 }
+      { kind: 'file', name: 'file1.txt', type: 'text/plain' },
+      { kind: 'file', name: 'file2.txt', type: 'text/plain' }
     ]));
   });
 

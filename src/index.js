@@ -1,11 +1,13 @@
 import { Controller } from '@hotwired/stimulus';
 import '@kanety/stimulus-static-actions';
+import FileScanner from './file-scanner.js';
 import './index.scss';
 
 export default class extends Controller {
   static values = {
     growWidth: String,
-    growHeight: String
+    growHeight: String,
+    allowDirs: Boolean
   }
   static actions = [
     ['element', 'dragenter->enter'],
@@ -37,23 +39,28 @@ export default class extends Controller {
     if (!this.isDroppable(e.dataTransfer)) return;
 
     this.counter--;
-    if (this.counter == 0) this.toggleClass(e.dataTransfer, false);
+    if (this.counter === 0) this.toggleClass(e.dataTransfer, false);
   }
 
-  drop(e) {
+  async drop(e) {
     e.preventDefault();
     if (!this.isDroppable(e.dataTransfer)) return;
+
+    const scanner = new FileScanner({ allowDirs: this.allowDirsValue });
+    const files = await scanner.scan(e.dataTransfer.items);
+    if (!this.isInputtable(files)) return;
 
     this.counter = 0;
     this.toggleClass(e.dataTransfer, false);
 
-    let input = this.input;
+    const input = this.input;
     if (input) {
-      input.files = e.dataTransfer.files;
+      const dt = this.createDataTransfer(files)
+      input.files = dt.files;
       input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
       input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
     }
-    this.dispatch('dropped', { detail: { files: e.dataTransfer.files } });
+    this.dispatch('dropped', { detail: { files: files } });
   }
 
   toggleClass(dataTransfer, dragover) {
@@ -112,11 +119,17 @@ export default class extends Controller {
   }
 
   isDroppable(dataTransfer) {
-    return dataTransfer.items.length && dataTransfer.items[0].kind == 'file' && this.isInputtable(dataTransfer);
+    return dataTransfer.items.length && this.isInputtable(dataTransfer.items);
   }
 
-  isInputtable(dataTransfer) {
-    let input = this.input;
-    return !input || (!input.disabled && (input.hasAttribute('multiple') || dataTransfer.items.length == 1));
+  isInputtable(items) {
+    const input = this.input;
+    return !input || (!input.disabled && (input.hasAttribute('multiple') || items.length === 1));
+  }
+
+  createDataTransfer(files) {
+    const dt = new DataTransfer();
+    files.forEach(file => dt.items.add(file));
+    return dt;
   }
 }

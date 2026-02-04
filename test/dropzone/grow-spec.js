@@ -12,7 +12,7 @@ describe('grow', () => {
   });
 
   it('grows zone', () => {
-    let files = [{ name: 'file1.txt', type: 'text/plain', size: 1 }];
+    const files = [{ kind: 'file', name: 'file1.txt', type: 'text/plain' }];
     document.dispatchEvent(createTransferEvent('dragenter', files));
     document.dispatchEvent(createTransferEvent('dragover', files));
     expect($('div').style.minWidth).toEqual('500px');

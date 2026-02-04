@@ -14,7 +14,7 @@ describe('disabled', () => {
       set: (newFiles) => { files = newFiles; }
     });
     $('div').dispatchEvent(createTransferEvent('drop', [
-      { name: 'file1.txt', type: 'text/plain' }
+      { kind: 'file', name: 'file1.txt', type: 'text/plain' }
     ]));
   });
 

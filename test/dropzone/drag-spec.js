@@ -10,7 +10,7 @@ describe('drag', () => {
   });
 
   it('drag', () => {
-    let files = [{ name: 'file1.txt', type: 'text/plain', size: 1 }];
+    const files = [{ kind: 'file', name: 'file1.txt', type: 'text/plain' }];
     document.dispatchEvent(createTransferEvent('dragenter', files));
     document.dispatchEvent(createTransferEvent('dragover', files));
     $('div').dispatchEvent(createTransferEvent('dragenter', files));
